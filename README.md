@@ -2,8 +2,8 @@
 
 ## 效果演示
 <figure class="half">
-    <img src="https://github.com/861005672/Collision-avoidance-training-of-PPO-in-Gazebo/blob/main/PPO算法演示1.gif">
-    <img src="https://github.com/861005672/Collision-avoidance-training-of-PPO-in-Gazebo/blob/main/PPO算法演示2.gif">
+    <img src="https://github.com/861005672/Collision-avoidance-training-of-PPO-in-Gazebo/blob/main/PPO算法演示1.gif" width="300" />
+    <img src="https://github.com/861005672/Collision-avoidance-training-of-PPO-in-Gazebo/blob/main/PPO算法演示2.gif" width="300" />
 </figure>
 
 ## 概述
