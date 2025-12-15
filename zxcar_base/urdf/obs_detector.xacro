@@ -1,0 +1,135 @@
+<robot name="ray_sensor" xmlns:xacro="http://wiki.ros.org/xacro">
+
+
+  <link name="obsDetector_link">
+    <visual>
+        <geometry>
+            <cylinder length="0.001" radius="0.001"/> 
+        </geometry>
+        <material name="gray">
+            <color rgba="0.5 0.5 0.5 1"/>
+        </material>
+    </visual>
+    <collision name="obsDetector_collision">
+        <geometry>
+            <cylinder length="0.01" radius="0.01"/>
+        </geometry>
+    </collision>
+    <inertial>
+        <mass value="0.1"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
+
+
+      <!-- 使用 libgazebo_ros_laser 插件添加激光传感器 -->
+	<gazebo reference="obsDetector_link">
+		<sensor type="ray" name="laser_sensor">
+		<pose>0 0 0 0 0 0</pose>
+		<visualize>true</visualize>
+		<update_rate>5.5</update_rate>
+		<ray>
+			<scan>
+			<horizontal>
+				<samples>60</samples>
+				<resolution>1</resolution>
+				<min_angle>-3.14</min_angle>
+				<max_angle>3.14</max_angle>
+			</horizontal>
+			</scan>
+			<range>
+			<min>0.1</min>
+			<max>1.0</max>
+			<resolution>0.01</resolution>
+			</range>
+			<noise>
+			<type>gaussian</type>
+			<mean>0.0</mean>
+			<stddev>0.01</stddev>
+			</noise>
+		</ray>
+		<plugin name="gazebo_ros_laser" filename="libgazebo_ros_laser.so">
+			<topicName>obsDetector_ray_scan</topicName>
+			<frameName>obsDetector_link</frameName>
+		</plugin>
+		</sensor>
+	</gazebo>
+
+
+
+
+    <!-- 添加 Gazebo 插件 ： ray射线传感器-->
+    <!-- <gazebo reference="obsDetector_link">
+        <sensor type="gpu_ray" name="velodyne_sensor">
+            <pose>0 0 0 0 0 0</pose>
+            <visualize>false</visualize>
+            <update_rate>10</update_rate>
+            <ray>
+                <scan>
+                    <horizontal>
+                        <samples>10</samples>
+                        <resolution>1.0</resolution>
+                        <min_angle>-3.14159</min_angle>
+                        <max_angle>3.14159</max_angle>
+                    </horizontal>
+                    <vertical>
+                        <samples>10</samples>
+                        <resolution>1.0</resolution>
+                        <min_angle>-1.57</min_angle>
+                        <max_angle>1.57</max_angle>
+                    </vertical>
+                </scan>
+                <range>
+                    <min>0.01</min>
+                    <max>0.3</max>
+                    <resolution>0.01</resolution>
+                </range>
+                <noise>
+                    <type>gaussian</type>
+                    <mean>0.0</mean>
+                    <stddev>0.0</stddev>
+                </noise>
+            </ray>
+            <plugin name="gazebo_ros_velodyne_gpu" filename="libgazebo_ros_velodyne_gpu_laser.so">
+                <organize_cloud>true</organize_cloud>
+                <topicName>obsDetector_ray_scan</topicName>
+                <frameName>obsDetector_link</frameName>
+                <min_intensity>10</min_intensity>
+                <min_range>0.01</min_range>
+                <max_range>0.3</max_range>
+                <gaussianNoise>0</gaussianNoise>
+            </plugin>
+        </sensor>
+    </gazebo> -->
+
+
+
+
+
+    <!-- bumper 碰撞传感器 -->
+    <!-- <gazebo reference="obsDetector_link">
+        <sensor name="contacts" type="contact">
+            <contact>
+                <collision>obsDetector_link_fixed_joint_lump__obsDetector_collision_collision</collision>
+            </contact>
+            <plugin name="gazebo_ros_bumper_controller" filename="libgazebo_ros_bumper.so">
+            <always_on>true</always_on>
+            <robotNamespace>/</robotNamespace>
+            <bumperTopicName>obsDetector_bumper_state</bumperTopicName>
+            <frameName>bumper</frameName>
+            <visualize>true</visualize>
+            <update_rate>50.0</update_rate>        
+            </plugin>
+        </sensor>
+        <material>Gazebo/Red</material>
+        <mu1>0.1</mu1>
+        <mu2>0.1</mu2>
+        <gravity>false</gravity>
+        <selfCollide>false</selfCollide>
+    </gazebo> -->
+
+
+
+
+</robot>

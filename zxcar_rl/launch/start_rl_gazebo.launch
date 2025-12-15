@@ -1,0 +1,63 @@
+<launch>
+
+
+	<!-- 输入参数 -->
+    <arg name="paused" default="false"/>
+    <arg name="gui" default="true"/>
+    <arg name="_world" default="world_20_20_obs"/>
+
+
+    <!-- 启动gazebo世界 -->
+    <include file="$(find zxcar_base)/launch/open_world.launch">
+        <arg name="_world" value="$(find zxcar_base)/worlds/$(arg _world).world"/>
+        <arg name="paused" value="$(arg paused)"/>
+        <arg name="gui" value="$(arg gui)"/>
+    </include>
+
+
+	<!-- 启动障碍物探测节点 -->
+	<!-- <include file="$(find zxcar_base)/launch/obs_detector.launch" >
+        <arg name="ray_check_range" value="0.5" />
+    </include> -->
+
+
+    <!-- 启动rviz -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find zxcar_base)/config/conf.rviz"/>
+
+
+	<!-- 启动手柄输入监听节点 -->
+    <node name="joy_node" 
+                pkg="joy" 
+                type="joy_node" 
+                output="screen" />
+
+
+	<!-- 载入第一个小车 -->
+	<include file="$(find zxcar_base)/launch/spawn_robot.launch">
+		<arg name="car_name" value="car1" />
+		<arg name="color_r" value="1.0" />
+		<arg name="color_g" value="1.0" />
+		<arg name="color_b" value="0.0" />
+		<arg name="color_a" value="0.5" />
+		<arg name="init_x" value="0" />
+		<arg name="init_y" value="0" />
+		<arg name="init_psi" value="0" />
+	</include>
+
+
+
+
+
+
+
+
+
+	<!-- 自动生成gazebo世界的地图 -->
+	<node name="get_gazebo_map" pkg="zxcar_base" type="get_gazebo_map.py" output="screen" >
+		<param name="map_name" value="$(find zxcar_rl)/maps/$(arg _world)" />
+	</node>
+
+
+
+
+</launch>

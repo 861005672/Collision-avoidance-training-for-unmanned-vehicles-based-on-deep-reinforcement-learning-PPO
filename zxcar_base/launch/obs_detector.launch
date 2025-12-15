@@ -1,0 +1,26 @@
+<launch>
+            
+      <arg name="ray_check_range" default="0.35" />
+
+
+      <!-- 加载探测传感器的URDF文件 -->
+      <param name="obs_detector_description" 
+            command="$(find xacro)/xacro $(find zxcar_base)/urdf/obs_detector.xacro" />
+      
+      <!-- 将探测传感器模型发布到Gazebo中 -->
+      <node name="spawn_urdf_obs_detector" 
+            pkg="gazebo_ros" 
+            type="spawn_model" 
+            args="-urdf -model obsDetector -param obs_detector_description -x 100.0 -y 100.0 -z 0 -Y 0.0" 
+            output="screen" />
+
+      <!-- 启动 bumper检测障碍物的服务节点 -->
+      <node name="obs_detector" 
+            pkg="zxcar_base" 
+            type="obs_detector" 
+            output="screen" >
+            <param name="ray_check_range" value="$(arg ray_check_range)" />
+      </node>
+
+
+</launch>    

@@ -1,0 +1,17 @@
+<!-- 组合小车底盘与摄像头 -->
+<robot name="zxcar" xmlns:xacro="http://wiki.ros.org/xacro">
+
+	<xacro:arg name="car_name" default="zxcar" />
+    <xacro:arg name="color_r" default="0.5" />
+    <xacro:arg name="color_g" default="0.5" />
+    <xacro:arg name="color_b" default="0.5" />
+    <xacro:arg name="color_a" default="1.0" />
+
+
+
+    <xacro:include filename="macro.xacro" />
+    <xacro:include filename="base.xacro" />
+    <xacro:include filename="camara.xacro" />
+    <xacro:include filename="laser.xacro" />
+    <xacro:include filename="move.xacro" />
+</robot>

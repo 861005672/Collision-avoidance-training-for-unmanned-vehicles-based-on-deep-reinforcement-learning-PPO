@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="tgt_point_maker">
+
+
+    <xacro:arg name="car_name" default="zxcar" />
+    <xacro:arg name="color_r" default="0.5" />
+    <xacro:arg name="color_g" default="0.5" />
+    <xacro:arg name="color_b" default="0.5" />
+    <xacro:arg name="color_a" default="1.0" />
+
+    <!-- 定义圆柱体连杆 -->
+    <link name="tgt_point_link">
+        <!-- 视觉属性 -->
+        <visual>
+            <geometry>
+                <!-- 定义为圆柱体，半径 0.5，高度 1.0 -->
+                <cylinder radius="0.4" length="0.0001"/>
+            </geometry>
+            <!-- 材质颜色为绿色 -->
+            <material name="green">
+                <color rgba="0 1 0 1"/>
+            </material>
+        </visual>
+        <!-- 惯性属性 -->
+        <inertial>
+            <!-- 质量为 1.0 -->
+            <mass value="1.0"/>
+            <!-- 惯性矩阵元素 -->
+            <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.05"/>
+        </inertial>
+    </link>
+
+
+    <gazebo reference='tgt_point_link'>
+        <visual>
+            <plugin name="set_model_color_plugin" filename="libset_model_color_plugin.so">
+                <robotNamespace>$(arg car_name)</robotNamespace>
+                <serviceName>tgtpoint_color</serviceName>
+                <color>$(arg color_r) $(arg color_g) $(arg color_b) $(arg color_a)</color>
+            </plugin>
+        </visual>
+		<static>true</static>
+		 <turnGravityOff>1</turnGravityOff>  <!-- 禁用重力 -->
+    </gazebo>
+
+
+
+
+</robot>    

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <arg name="car_name" default="zxcar" />
+    <arg name="color_r" default="0.5" />
+    <arg name="color_g" default="0.5" />
+    <arg name="color_b" default="0.5" />
+    <arg name="color_a" default="1.0" />
+    <arg name="init_x" default="0.0" />
+    <arg name="init_y" default="0.0" />
+    <arg name="init_psi" default="0.0" />
+
+
+    <group ns="$(arg car_name)">
+        <!-- 设置参数服务器中的 robot_description -->
+        <param name="robot_description" 
+               command="$(find xacro)/xacro $(find zxcar_base)/urdf/total.xacro
+                    color_r:=$(arg color_r)
+                    color_g:=$(arg color_g)
+                    color_b:=$(arg color_b)
+                    color_a:=$(arg color_a)
+                    car_name:=$(arg car_name) " />
+    
+        <!-- 在 gazebo 中显示机器人模型 -->
+        <node pkg="gazebo_ros" 
+              type="spawn_model" 
+              name="spawn_$(arg car_name)" 
+              args="-urdf -model $(arg car_name) -param robot_description -x $(arg init_x) -y $(arg init_y) -Y $(arg init_psi)" />
+
+
+        <!-- 在gazebo中加入目标点标志 -->
+        <!-- 加载 tgt_point 的 URDF 文件到参数服务器 -->
+        <param name="tgt_point_description" 
+                command="$(find xacro)/xacro $(find zxcar_base)/urdf/tgt_point_marker.xacro
+                    color_r:=$(arg color_r)
+                    color_g:=$(arg color_g)
+                    color_b:=$(arg color_b)
+                    color_a:=$(arg color_a)
+                    car_name:=$(arg car_name)" />
+
+        <!-- 在 Gazebo 中加载 tgt_point 模型 -->
+        <node name="spawn_urdf" 
+            pkg="gazebo_ros" 
+            type="spawn_model" 
+            args="-urdf -model $(arg car_name)_tgt_point -param tgt_point_description -x 100.0 -y 100.0 -z 0.1" />
+
+
+        <node pkg="joint_state_publisher" name="joint_state_publisher" type="joint_state_publisher" />
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+            <param name="tf_prefix" value="$(arg car_name)"/>
+        </node>
+
+
+    </group>
+
+
+
+</launch>

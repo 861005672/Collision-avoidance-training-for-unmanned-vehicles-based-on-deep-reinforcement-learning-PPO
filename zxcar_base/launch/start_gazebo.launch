@@ -1,0 +1,26 @@
+<launch>
+
+    <!-- 启动gazebo世界 -->
+    <include file="$(find zxcar_base)/launch/open_world.launch">
+        <arg name="_world" value="$(find zxcar_base)/worlds/world_10_10_obs.world"/>
+    </include>
+
+
+	<!-- 启动手柄输入监听节点 -->
+    <node name="joy_node" 
+                pkg="joy" 
+                type="joy_node" 
+                output="screen" />
+
+
+	<!-- 启动障碍物检测节点 -->
+	<include file="$(find zxcar_base)/launch/obs_detector.launch" >
+		<arg name="ray_check_range" value="0.5" />
+	</include>
+
+
+    <!-- 启动rviz -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find zxcar_base)/config/conf.rviz"/>
+
+
+</launch>

@@ -1,0 +1,5 @@
+# 请求参数
+geometry_msgs/Point detection_point  # 检测中心点坐标
+---
+# 返回结果
+bool obstacle_detected               # 是否检测到障碍物
