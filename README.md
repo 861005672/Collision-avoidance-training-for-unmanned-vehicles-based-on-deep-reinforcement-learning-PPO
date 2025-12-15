@@ -3,10 +3,12 @@
 ## 效果演示
 <div align="center">
 <figure class="half">
-    <img src="https://github.com/861005672/Collision-avoidance-training-of-PPO-in-Gazebo/blob/main/PPO算法演示1.gif" width=300 alt="演示1" />
-	<img src="https://github.com/861005672/Collision-avoidance-training-of-PPO-in-Gazebo/blob/main/PPO算法演示2.gif" width=300 alt="演示2" />
+    <img src="https://github.com/861005672/Collision-avoidance-training-of-PPO-in-Gazebo/blob/main/PPO算法演示1.gif" height=300 alt="演示1" />
+	<img src="https://github.com/861005672/Collision-avoidance-training-of-PPO-in-Gazebo/blob/main/PPO算法演示2.gif" height=300 alt="演示2" />
 </figure> 
 </div>
+
+BiliBili视频链接： https://www.bilibili.com/video/BV1VqjozGEEJ/?spm_id_from=333.1387.homepage.video_card.click&vd_source=1d0ba0ac19579de5595b21811125ff69
 
 
 ## 概述
